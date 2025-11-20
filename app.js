@@ -1,6 +1,5 @@
 // app.js - client routing (History API) and page rendering
 const root = document.getElementById('root');
-const navButtons = document.querySelectorAll('.nav-btn');
 
 const pages = {
   '/': renderHome,
@@ -11,7 +10,8 @@ const pages = {
 };
 
 function setActiveNav(path){
-  navButtons.forEach(b=>{
+  const allNavButtons = document.querySelectorAll('.nav-btn, .mobile-nav-btn');
+  allNavButtons.forEach(b=>{
     b.classList.toggle('active', b.dataset.path === path);
   });
 }
@@ -22,14 +22,49 @@ function navigate(path, push = true){
   root.appendChild(render());
   setActiveNav(path);
   if(push) history.pushState({path}, '', path);
+  // Re-setup navigation after page render
+  setTimeout(()=>{
+    setupNavButtons();
+    setupMobileMenu();
+  }, 50);
 }
 
 // Handle nav clicks
-navButtons.forEach(b=>{
-  b.addEventListener('click', ()=> {
-    navigate(b.dataset.path);
+function setupNavButtons(){
+  const buttons = document.querySelectorAll('.nav-btn');
+  buttons.forEach(b=>{
+    b.addEventListener('click', ()=> {
+      navigate(b.dataset.path);
+      // Close mobile menu if open
+      const mobileMenu = document.getElementById('mobile-menu');
+      if(mobileMenu) mobileMenu.classList.add('hidden');
+    });
   });
-});
+}
+
+// Handle mobile menu
+function setupMobileMenu(){
+  const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const mobileNavButtons = document.querySelectorAll('.mobile-nav-btn');
+  
+  if(mobileMenuToggle && mobileMenu){
+    mobileMenuToggle.addEventListener('click', ()=>{
+      mobileMenu.classList.toggle('hidden');
+    });
+  }
+  
+  mobileNavButtons.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      navigate(btn.dataset.path);
+      mobileMenu.classList.add('hidden');
+    });
+  });
+}
+
+// Setup navigation
+setupNavButtons();
+setupMobileMenu();
 
 // Handle back/forward
 window.addEventListener('popstate', (e)=>{
@@ -37,13 +72,27 @@ window.addEventListener('popstate', (e)=>{
   navigate(path, false);
 });
 
-// Initial route
-const initialPath = location.pathname === '/' ? '/' : location.pathname;
-if(!pages[initialPath]) {
-  // if served as file:// or unsupported path, fallback to '/'
-  navigate('/', false);
+// Initial route - handle page refresh
+function initRoute(){
+  let path = location.pathname;
+  // Handle hash-based routing for GitHub Pages compatibility
+  if(location.hash && location.hash.startsWith('#')){
+    path = location.hash.substring(1) || '/';
+  }
+  // Normalize path
+  if(path === '' || path === '/index.html') path = '/';
+  if(!pages[path]) {
+    navigate('/', false);
+  } else {
+    navigate(path, false);
+  }
+}
+
+// Initialize on load
+if(document.readyState === 'loading'){
+  document.addEventListener('DOMContentLoaded', initRoute);
 } else {
-  navigate(initialPath, false);
+  initRoute();
 }
 
 /* ---------- Page renderers ---------- */
