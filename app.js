@@ -57,29 +57,45 @@ function setupNavButtons(){
   });
 }
 
-// Handle mobile menu
-function setupMobileMenu(){
-  const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+// Global function for mobile menu toggle (called from HTML)
+window.toggleMobileMenu = function(){
   const mobileMenu = document.getElementById('mobile-menu');
-  const mobileNavButtons = document.querySelectorAll('.mobile-nav-btn');
-  
-  if(mobileMenuToggle && mobileMenu){
-    mobileMenuToggle.addEventListener('click', ()=>{
-      mobileMenu.classList.toggle('hidden');
-    });
+  if(mobileMenu){
+    mobileMenu.classList.toggle('hidden');
   }
+};
+
+// Handle mobile menu
+let mobileMenuInitialized = false;
+function setupMobileMenu(){
+  // Only setup once
+  if(mobileMenuInitialized) return;
   
+  // Setup mobile nav button clicks
+  const mobileNavButtons = document.querySelectorAll('.mobile-nav-btn');
   mobileNavButtons.forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      navigate(btn.dataset.path);
-      mobileMenu.classList.add('hidden');
+    btn.addEventListener('click', function(e){
+      e.preventDefault();
+      const path = this.dataset.path;
+      navigate(path);
+      const menu = document.getElementById('mobile-menu');
+      if(menu) menu.classList.add('hidden');
     });
   });
+  
+  mobileMenuInitialized = true;
 }
 
-// Setup navigation
-setupNavButtons();
-setupMobileMenu();
+// Setup navigation - wait for DOM to be ready
+if(document.readyState === 'loading'){
+  document.addEventListener('DOMContentLoaded', ()=>{
+    setupNavButtons();
+    setupMobileMenu();
+  });
+} else {
+  setupNavButtons();
+  setupMobileMenu();
+}
 
 // Handle back/forward
 window.addEventListener('popstate', (e)=>{
