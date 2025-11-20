@@ -21,7 +21,22 @@ function navigate(path, push = true){
   root.innerHTML = '';
   root.appendChild(render());
   setActiveNav(path);
-  if(push) history.pushState({path}, '', path);
+  if(push) {
+    // Use hash-based routing for better compatibility with static hosting (GitHub Pages, etc.)
+    // This ensures page refreshes work correctly
+    if(location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:') {
+      // Local development - use normal routing
+      try {
+        history.pushState({path}, '', path);
+      } catch(e) {
+        // Fallback to hash routing if pushState fails
+        location.hash = path;
+      }
+    } else {
+      // Production/static hosting - use hash routing
+      location.hash = path;
+    }
+  }
   // Re-setup navigation after page render
   setTimeout(()=>{
     setupNavButtons();
@@ -74,13 +89,31 @@ window.addEventListener('popstate', (e)=>{
 
 // Initial route - handle page refresh
 function initRoute(){
-  let path = location.pathname;
-  // Handle hash-based routing for GitHub Pages compatibility
-  if(location.hash && location.hash.startsWith('#')){
-    path = location.hash.substring(1) || '/';
+  let path = '/';
+  
+  // Check for hash-based routing first (for static hosting)
+  if(location.hash && location.hash.length > 1){
+    path = location.hash.substring(1);
+  } 
+  // Fall back to pathname for local development
+  else {
+    path = location.pathname;
+    // Normalize common paths
+    if(path === '' || path === '/' || path === '/index.html' || 
+       path === '/my-portfolio/' || path === '/my-portfolio/index.html' ||
+       path === '/my-portfolio') {
+      path = '/';
+    }
   }
+  
   // Normalize path
-  if(path === '' || path === '/index.html') path = '/';
+  if(!path.startsWith('/')) path = '/' + path;
+  
+  // Set hash if not already set (for static hosting compatibility)
+  if(!location.hash && path !== '/') {
+    location.hash = path;
+  }
+  
   if(!pages[path]) {
     navigate('/', false);
   } else {
@@ -94,6 +127,16 @@ if(document.readyState === 'loading'){
 } else {
   initRoute();
 }
+
+// Handle hash changes (for static hosting and browser back/forward)
+window.addEventListener('hashchange', ()=>{
+  const path = location.hash.substring(1) || '/';
+  if(pages[path]) {
+    navigate(path, false);
+  } else {
+    navigate('/', false);
+  }
+});
 
 /* ---------- Page renderers ---------- */
 

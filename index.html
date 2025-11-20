@@ -9,16 +9,17 @@
 <body>
   <header class="nav" role="banner">
     <div class="brand" aria-hidden="false">Atharv Sharma</div>
-    <button class="hamburger-menu" id="mobile-menu-toggle" aria-label="Menu">☰</button>
     <nav role="navigation" aria-label="Main Navigation" class="desktop-nav">
-      <button class="nav-btn" data-path="/" aria-label="Home">Home</button>
+      <div class="home-nav-wrapper">
+        <button class="nav-btn" data-path="/" aria-label="Home">Home</button>
+        <button class="hamburger-menu" id="mobile-menu-toggle" aria-label="Menu">☰</button>
+      </div>
       <button class="nav-btn" data-path="/data-science" aria-label="Data Science">Data Science</button>
       <button class="nav-btn" data-path="/video-editing" aria-label="Video Editing">Video Editing</button>
       <button class="nav-btn" data-path="/resume" aria-label="Resume">Resume</button>
       <button class="nav-btn" data-path="/contact" aria-label="Contact">Contact</button>
     </nav>
     <div id="mobile-menu" class="mobile-menu hidden">
-      <button class="mobile-nav-btn" data-path="/">Home</button>
       <button class="mobile-nav-btn" data-path="/data-science">Data Science</button>
       <button class="mobile-nav-btn" data-path="/video-editing">Video Editing</button>
       <button class="mobile-nav-btn" data-path="/resume">Resume</button>
