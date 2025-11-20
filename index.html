@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Premium Portfolio</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="nav" role="banner">
+    <div class="brand" aria-hidden="false">Atharv Sharma</div>
+    <nav role="navigation" aria-label="Main Navigation">
+      <button class="nav-btn" data-path="/" aria-label="Home">Home</button>
+      <button class="nav-btn" data-path="/data-science" aria-label="Data Science">Data Science</button>
+      <button class="nav-btn" data-path="/video-editing" aria-label="Video Editing">Video Editing</button>
+      <button class="nav-btn" data-path="/resume" aria-label="Resume">Resume</button>
+      <button class="nav-btn" data-path="/contact" aria-label="Contact">Contact</button>
+    </nav>
+  </header>
+
+  <main id="root" role="main">
+    <!-- Pages will be injected here -->
+
+    <!-- Contact -->
+    <section id="contact">
+      <!-- ...existing contact markup... -->
+      <p>Email: <a href="mailto:atharv26101948@gmail.com">atharv26101948@gmail.com</a></p>
+      <!-- ...existing contact markup... -->
+    </section>
+
+    <!-- Resume / Download -->
+    <!-- ...existing code... -->
+    <a class="btn" href="/resume.pdf" download>Download Resume</a>
+    <!-- ...existing code... -->
+
+    <!-- Home / About -->
+    <section id="home" class="home-section">
+      <!-- ...existing code... -->
+      <p>
+        I am a Data Scientist and a Video Editor — two distinct professional roles. As a Data Scientist I design and implement machine‑learning models, build visualisations and deliver data‑driven products and insights. As a Video Editor I produce narrative‑driven video content for commercial clients. I do not edit data‑analysis deliverables; data science work and video editing are separate domains.
+      </p>
+      <!-- ...existing code... -->
+    </section>
+    <!-- ...existing code... -->
+
+    <!-- Skills & Languages -->
+    <section id="skills">
+      <h3>Skills & Languages</h3>
+      <ul class="skills-list">
+        <li><img src="assets/icons/python.png" alt="Python" class="icon"> Python</li>
+        <li><img src="assets/icons/r.png" alt="R" class="icon"> R</li>
+        <li><img src="assets/icons/javascript.png" alt="JavaScript" class="icon"> JavaScript</li>
+        <li><img src="assets/icons/html5.png" alt="HTML5" class="icon"> HTML5</li>
+        <li><img src="assets/icons/css3.png" alt="CSS3" class="icon"> CSS3</li>
+        <li><img src="assets/icons/tensorflow.png" alt="TensorFlow" class="icon"> TensorFlow / ML</li>
+        <li><img src="assets/icons/pandas.png" alt="Pandas" class="icon"> Pandas / Data Wrangling</li>
+        <li><img src="assets/icons/premiere.png" alt="Premiere Pro" class="icon"> Adobe Premiere Pro</li>
+        <li><img src="assets/icons/aftereffects.png" alt="After Effects" class="icon"> Adobe After Effects</li>
+        <li><img src="assets/icons/davinci.png" alt="DaVinci Resolve" class="icon"> DaVinci Resolve</li>
+      </ul>
+    </section>
+    <!-- ...existing code... -->
+
+    <!-- Video Editing (separate from Data Analytics) -->
+    <section id="video-editing">
+      <h3>Video Editing</h3>
+      <p>
+        I focus on high-quality, narrative-driven video production: story structure, pacing, color grading, audio mixing, motion graphics and final mastering for broadcast and socials. This work is production-focused and separate from my Data Science practice — I do not perform editing on data-analysis deliverables.
+      </p>
+
+      <h4>Selected Clients</h4>
+      <div class="clients">
+        <div class="client">
+          <h5>Reliance Industries</h5>
+          <p>
+            Delivered corporate and promotional videos for Reliance including multi-camera edits, branded motion graphics, color grading and final mastering for broadcast and social platforms. Projects required strict brand compliance, coordination with creative/marketing teams and fast turnaround under tight timelines.
+          </p>
+        </div>
+
+        <div class="client">
+          <h5>Client B — Product Launchs & Explainers</h5>
+          <p>
+            Produced product-launch and explainer videos combining interviews, product footage and animated motion graphics. Responsibilities included storyboarding, rough and fine cuts, audio cleanup, subtitle creation and platform-specific exports with an emphasis on clear messaging and conversion-driven narrative.
+          </p>
+        </div>
+
+        <div class="client">
+          <h5>Client C — Campaign & Social Content</h5>
+          <p>
+            Managed end-to-end post-production for campaign videos: ingest, logging, assembly, color grading, audio mix, motion graphics and deliverable packaging. Ensured consistent visual style and optimized deliverables for multiple social platforms.
+          </p>
+        </div>
+      </div>
+    </section>
+    <!-- ...existing code... -->
+  </main>
+
+  <footer class="footer" role="contentinfo">© Atharv Sharma — Premium Portfolio</footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>

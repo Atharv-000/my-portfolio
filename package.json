@@ -1,0 +1,13 @@
+{
+  "name": "premium-portfolio-final",
+  "version": "1.0.0",
+  "description": "Premium metallic + glass portfolio (vanilla JS SPA) - full package",
+  "scripts": {
+    "start": "serve -s . -l 3000",
+    "dev": "serve -s . -l 3000",
+    "build": "echo \"Static site - no build step\""
+  },
+  "dependencies": {
+    "serve": "^14.2.5"
+  }
+}
